@@ -1,0 +1,2 @@
+Đây là file ghi chú cá nhân.
+Đã cập nhật nội dung notes lần 1 để commit cùng style.css.
