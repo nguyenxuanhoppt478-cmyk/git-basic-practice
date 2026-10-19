@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Thẻ Sản Phẩm Flexbox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        h2.title {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #0f172a;
+        }
+
+        /* KHUNG LƯỚI SẢN PHẨM SỬ DỤNG FLEXBOX */
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;       /* Cho phép các thẻ tự xuống dòng khi thiếu chỗ */
+            gap: 20px;             /* Khoảng cách giữa các thẻ sản phẩm */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* THẺ SẢN PHẨM CO GIÃN LINH HOẠT */
+        .product-card {
+            flex: 1 1 calc(25% - 20px); /* Tự co giãn, cơ sở chiếm ~25% độ rộng (4 cột) */
+            min-width: 220px;           /* Chiều rộng tối thiểu để kích hoạt xuống dòng */
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card h4 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .product-card .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e11d48;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Danh Sách Sản Phẩm Nổi Bật</h2>
+
+    <div class="product-grid">
+        <div class="product-card">
+            <h4>Sản phẩm 1</h4>
+            <p class="price">500.000 đ</p>
+        </div>
+        <div class="product-card">
+            <h4>Sản phẩm 2</h4>
+            <p class="price">750.000 đ</p>
+        </div>
+        <div class="product-card">
+            <h4>Sản phẩm 3</h4>
+            <p class="price">1.200.000 đ</p>
+        </div>
+        <div class="product-card">
+            <h4>Sản phẩm 4</h4>
+            <p class="price">320.000 đ</p>
+        </div>
+    </div>
+
+</body>
+</html>
