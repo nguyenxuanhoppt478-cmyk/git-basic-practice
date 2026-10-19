@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Căn giữa phần tử bằng Flexbox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 3 DÒNG CỐT LÕI CĂN GIỮA BẰNG FLEXBOX */
+        .container {
+            min-height: 100vh;
+            display: flex;             /* Dòng 1: Kích hoạt mô hình Flexbox */
+            justify-content: center;  /* Dòng 2: Căn giữa theo trục ngang (Main axis) */
+            align-items: center;      /* Dòng 3: Căn giữa theo trục dọc (Cross axis) */
+            background-color: #f0f2f5;
+        }
+
+        .center-card {
+            padding: 30px 40px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 400px;
+            transition: transform 0.2s ease;
+        }
+
+        .center-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .center-card h3 {
+            color: #1a73e8;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+
+        .center-card p {
+            color: #5f6368;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="center-card">
+            <h3>Căn giữa hoàn hảo!</h3>
+            <p>Phần tử này nằm chính giữa khung nhìn màn hình.</p>
+        </div>
+    </div>
+
+</body>
+</html>
