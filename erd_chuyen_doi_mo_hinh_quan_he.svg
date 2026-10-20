@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="tableGlow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.35" flood-color="#000000"/>
+    </filter>
+    <linearGradient id="headerGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="junctionGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2e1065"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title-dark { font-size: 22px; font-weight: 700; fill: #f8fafc; }
+    .subtitle-dark { font-size: 13px; fill: #94a3b8; }
+    .table-title { font-size: 13px; font-weight: 700; fill: #38bdf8; letter-spacing: 0.5px; }
+    .table-title-junc { font-size: 13px; font-weight: 700; fill: #c084fc; letter-spacing: 0.5px; }
+    .col-pk { font-size: 11px; font-weight: 700; fill: #fbbf24; }
+    .col-fk { font-size: 11px; font-weight: 600; fill: #a78bfa; }
+    .col-normal { font-size: 11px; fill: #cbd5e1; }
+    .col-type { font-size: 10px; fill: #64748b; font-family: monospace; }
+    .badge-pk { fill: #f59e0b; font-size: 9px; font-weight: bold; }
+  </style>
+
+  <!-- Banner Header -->
+  <text x="40" y="45" class="title-dark">MÔ HÌNH QUAN HỆ SAU CHUYỂN ĐỔI TỪ SƠ ĐỒ ERD (VẬT TƯ - KHO)</text>
+  <text x="40" y="68" class="subtitle-dark">Chuyển đổi thực thể, liên kết 1-n, liên kết n-m (bảng trung gian) và thuộc tính đa trị (SDT)</text>
+
+  <!-- ==================== HÀNG 1: PHIẾU XUẤT - CHI TIẾT XUẤT - VẬT TƯ ==================== -->
+  
+  <!-- Bảng PhieuXuat (x: 40, y: 100) -->
+  <g transform="translate(40, 100)" filter="url(#tableGlow2)">
+    <rect width="210" height="95" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <rect width="210" height="30" rx="6" fill="url(#headerGrad2)"/>
+    <text x="12" y="20" class="table-title">📁 PhieuXuat</text>
+    <line x1="0" y1="30" x2="210" y2="30" stroke="#334155"/>
+    <text x="12" y="52" class="col-pk">🔑 SoPX</text><text x="150" y="52" class="col-type">VARCHAR</text>
+    <text x="12" y="74" class="col-normal">NgayXuat</text><text x="150" y="74" class="col-type">DATETIME</text>
+  </g>
+
+  <!-- Bảng ChiTietPhieuXuat (Bảng trung gian n-m) (x: 320, y: 100) -->
+  <g transform="translate(320, 100)" filter="url(#tableGlow2)">
+    <rect width="230" height="135" rx="6" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect width="230" height="30" rx="6" fill="url(#junctionGrad)"/>
+    <text x="12" y="20" class="table-title-junc">🔗 ChiTietPhieuXuat</text>
+    <line x1="0" y1="30" x2="230" y2="30" stroke="#7c3aed"/>
+    <text x="12" y="50" class="col-pk">🔑🔗 SoPX (PK, FK)</text><text x="170" y="50" class="col-type">VARCHAR</text>
+    <text x="12" y="72" class="col-pk">🔑🔗 MaVT (PK, FK)</text><text x="170" y="72" class="col-type">VARCHAR</text>
+    <text x="12" y="94" class="col-normal">DGXuat</text><text x="170" y="94" class="col-type">DECIMAL</text>
+    <text x="12" y="116" class="col-normal">SLXuat</text><text x="170" y="116" class="col-type">INT</text>
+  </g>
+
+  <!-- Bảng VatTu (Thực thể trung tâm) (x: 630, y: 100) -->
+  <g transform="translate(630, 100)" filter="url(#tableGlow2)">
+    <rect width="220" height="95" rx="6" fill="#1e293b" stroke="#0284c7" stroke-width="2"/>
+    <rect width="220" height="30" rx="6" fill="url(#headerGrad2)"/>
+    <text x="12" y="20" class="table-title">📦 VatTu</text>
+    <line x1="0" y1="30" x2="220" y2="30" stroke="#334155"/>
+    <text x="12" y="52" class="col-pk">🔑 MaVT</text><text x="160" y="52" class="col-type">VARCHAR</text>
+    <text x="12" y="74" class="col-normal">TenVT</text><text x="160" y="74" class="col-type">VARCHAR</text>
+  </g>
+
+
+  <!-- ==================== HÀNG 2: PHIẾU NHẬP - CHI TIẾT NHẬP ==================== -->
+
+  <!-- Bảng PhieuNhap (x: 40, y: 320) -->
+  <g transform="translate(40, 320)" filter="url(#tableGlow2)">
+    <rect width="210" height="95" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <rect width="210" height="30" rx="6" fill="url(#headerGrad2)"/>
+    <text x="12" y="20" class="table-title">📁 PhieuNhap</text>
+    <line x1="0" y1="30" x2="210" y2="30" stroke="#334155"/>
+    <text x="12" y="52" class="col-pk">🔑 SoPN</text><text x="150" y="52" class="col-type">VARCHAR</text>
+    <text x="12" y="74" class="col-normal">NgayNhap</text><text x="150" y="74" class="col-type">DATETIME</text>
+  </g>
+
+  <!-- Bảng ChiTietPhieuNhap (Bảng trung gian n-m) (x: 320, y: 320) -->
+  <g transform="translate(320, 320)" filter="url(#tableGlow2)">
+    <rect width="230" height="135" rx="6" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect width="230" height="30" rx="6" fill="url(#junctionGrad)"/>
+    <text x="12" y="20" class="table-title-junc">🔗 ChiTietPhieuNhap</text>
+    <line x1="0" y1="30" x2="230" y2="30" stroke="#7c3aed"/>
+    <text x="12" y="50" class="col-pk">🔑🔗 SoPN (PK, FK)</text><text x="170" y="50" class="col-type">VARCHAR</text>
+    <text x="12" y="72" class="col-pk">🔑🔗 MaVT (PK, FK)</text><text x="170" y="72" class="col-type">VARCHAR</text>
+    <text x="12" y="94" class="col-normal">DGNhap</text><text x="170" y="94" class="col-type">DECIMAL</text>
+    <text x="12" y="116" class="col-normal">SLNhap</text><text x="170" y="116" class="col-type">INT</text>
+  </g>
+
+
+  <!-- ==================== HÀNG 3: ĐƠN ĐẶT HÀNG - CHI TIẾT ĐƠN HÀNG ==================== -->
+
+  <!-- Bảng ChiTietDonDatHang (x: 630, y: 320) -->
+  <g transform="translate(630, 320)" filter="url(#tableGlow2)">
+    <rect width="220" height="95" rx="6" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect width="220" height="30" rx="6" fill="url(#junctionGrad)"/>
+    <text x="12" y="20" class="table-title-junc">🔗 ChiTietDonDatHang</text>
+    <line x1="0" y1="30" x2="220" y2="30" stroke="#7c3aed"/>
+    <text x="12" y="52" class="col-pk">🔑🔗 SoDH (PK, FK)</text><text x="160" y="52" class="col-type">VARCHAR</text>
+    <text x="12" y="74" class="col-pk">🔑🔗 MaVT (PK, FK)</text><text x="160" y="74" class="col-type">VARCHAR</text>
+  </g>
+
+  <!-- Bảng DonDatHang (x: 920, y: 320) -->
+  <g transform="translate(920, 320)" filter="url(#tableGlow2)">
+    <rect width="240" height="115" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <rect width="240" height="30" rx="6" fill="url(#headerGrad2)"/>
+    <text x="12" y="20" class="table-title">📑 DonDatHang</text>
+    <line x1="0" y1="30" x2="240" y2="30" stroke="#334155"/>
+    <text x="12" y="50" class="col-pk">🔑 SoDH</text><text x="180" y="50" class="col-type">VARCHAR</text>
+    <text x="12" y="72" class="col-normal">NgayDH</text><text x="180" y="72" class="col-type">DATETIME</text>
+    <text x="12" y="94" class="col-fk">🔗 MaNCC (FK)</text><text x="180" y="94" class="col-type">VARCHAR</text>
+  </g>
+
+
+  <!-- ==================== HÀNG 4: NHÀ CUNG CẤP & SỐ ĐIỆN THOẠI ==================== -->
+
+  <!-- Bảng NhaCungCap (x: 920, y: 520) -->
+  <g transform="translate(920, 520)" filter="url(#tableGlow2)">
+    <rect width="240" height="115" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <rect width="240" height="30" rx="6" fill="url(#headerGrad2)"/>
+    <text x="12" y="20" class="table-title">🏭 NhaCungCap</text>
+    <line x1="0" y1="30" x2="240" y2="30" stroke="#334155"/>
+    <text x="12" y="50" class="col-pk">🔑 MaNCC</text><text x="180" y="50" class="col-type">VARCHAR</text>
+    <text x="12" y="72" class="col-normal">TenNCC</text><text x="180" y="72" class="col-type">VARCHAR</text>
+    <text x="12" y="94" class="col-normal">DiaChi</text><text x="180" y="94" class="col-type">VARCHAR</text>
+  </g>
+
+  <!-- Bảng Thuộc tính đa trị SDT (x: 920, y: 700) -->
+  <g transform="translate(920, 700)" filter="url(#tableGlow2)">
+    <rect width="240" height="95" rx="6" fill="#1e293b" stroke="#eab308" stroke-width="1.5"/>
+    <rect width="240" height="30" rx="6" fill="#854d0e"/>
+    <text x="12" y="20" font-size="12" font-weight="bold" fill="#fef08a">📞 NhaCungCap_SDT (Đa trị)</text>
+    <line x1="0" y1="30" x2="240" y2="30" stroke="#eab308"/>
+    <text x="12" y="52" class="col-pk">🔑🔗 MaNCC (PK, FK)</text><text x="180" y="52" class="col-type">VARCHAR</text>
+    <text x="12" y="74" class="col-pk">🔑 SDT (PK)</text><text x="180" y="74" class="col-type">VARCHAR</text>
+  </g>
+
+  <!-- ==================== BẢNG CHÚ THÍCH VÀ QUY TẮC ==================== -->
+  <g transform="translate(40, 520)">
+    <rect width="810" height="275" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="24" y="32" font-size="14" font-weight="700" fill="#38bdf8">📌 TỔNG KẾT 4 BƯỚC CHUYỂN ĐỔI CHUẨN:</text>
+    
+    <text x="24" y="62" font-size="12" font-weight="700" fill="#facc15">1. Thực thể mạnh (Strong Entities):</text>
+    <text x="40" y="82" font-size="11.5" fill="#cbd5e1">• Tạo thành các bảng: <tspan fill="#38bdf8">VatTu</tspan>, <tspan fill="#38bdf8">PhieuXuat</tspan>, <tspan fill="#38bdf8">PhieuNhap</tspan>, <tspan fill="#38bdf8">DonDatHang</tspan>, <tspan fill="#38bdf8">NhaCungCap</tspan>.</text>
+
+    <text x="24" y="112" font-size="12" font-weight="700" fill="#facc15">2. Mối quan hệ 1 - n (NhaCungCap - DonDatHang):</text>
+    <text x="40" y="132" font-size="11.5" fill="#cbd5e1">• Lấy khóa chính <tspan fill="#fbbf24">MaNCC</tspan> phía "1" đưa sang phía "n" làm khóa ngoại <tspan fill="#a78bfa">MaNCC (FK)</tspan> trong bảng <tspan fill="#38bdf8">DonDatHang</tspan>.</text>
+
+    <text x="24" y="162" font-size="12" font-weight="700" fill="#facc15">3. Mối quan hệ n - m (XUAT, NHAP, DAT_HANG):</text>
+    <text x="40" y="182" font-size="11.5" fill="#cbd5e1">• Tạo 3 bảng trung gian: <tspan fill="#c084fc">ChiTietPhieuXuat</tspan>, <tspan fill="#c084fc">ChiTietPhieuNhap</tspan>, <tspan fill="#c084fc">ChiTietDonDatHang</tspan>.</text>
+    <text x="40" y="202" font-size="11.5" fill="#cbd5e1">• Khóa chính là kết hợp 2 khóa ngoại (SoPX+MaVT, SoPN+MaVT, SoDH+MaVT) kèm thuộc tính riêng.</text>
+
+    <text x="24" y="232" font-size="12" font-weight="700" fill="#facc15">4. Thuộc tính đa trị (SDT của Nhà Cung Cấp):</text>
+    <text x="40" y="252" font-size="11.5" fill="#cbd5e1">• Tách thành bảng riêng <tspan fill="#fef08a">NhaCungCap_SDT</tspan> gồm (<tspan fill="#fbbf24">MaNCC</tspan>, <tspan fill="#fbbf24">SDT</tspan>) để đảm bảo chuẩn 1NF.</text>
+  </g>
+</svg>
