@@ -1,0 +1,259 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background:#f8fafc; font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Shadows & Gradients -->
+    <filter id="cardShadowB" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.08" flood-color="#0f172a"/>
+    </filter>
+    <filter id="pillShadowB" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.06" flood-color="#0f172a"/>
+    </filter>
+    <linearGradient id="headerGradB" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="entityGradB" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="relGradB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <linearGradient id="attrGradB" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="pkGradB" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-size: 24px; font-weight: 700; fill: #ffffff; }
+    .subtitle { font-size: 13px; fill: #e2e8f0; }
+    .entity-title { font-size: 14px; font-weight: 700; fill: #1e293b; text-anchor: middle; letter-spacing: 0.5px; }
+    .rel-title { font-size: 13px; font-weight: 700; fill: #b45309; text-anchor: middle; }
+    .attr-text { font-size: 12px; fill: #334155; text-anchor: middle; }
+    .pk-text { font-size: 12px; font-weight: 700; fill: #1d4ed8; text-anchor: middle; text-decoration: underline; }
+    .conn-line { stroke: #64748b; stroke-width: 1.5; }
+    .rel-line { stroke: #d97706; stroke-width: 2; }
+    .cardinality { font-size: 13px; font-weight: 700; fill: #0f172a; }
+  </style>
+
+  <!-- Banner Header -->
+  <rect x="0" y="0" width="1200" height="75" fill="url(#headerGradB)"/>
+  <text x="40" y="38" class="title">SƠ ĐỒ THỰC THỂ MỐI QUAN HỆ (ERD) - BƯỚC 4: MÔ HÌNH BAN ĐẦU</text>
+  <text x="40" y="60" class="subtitle">Chưa chuẩn hóa: Tách biệt 2 thực thể ĐƠN VỊ ĐH &amp; ĐƠN VỊ KH | 7 thực thể độc lập</text>
+
+  <!-- ==================== CÁC ĐƯỜNG NỐI ==================== -->
+  <!-- Nối ĐƠN VỊ ĐH với thuộc tính -->
+  <line x1="160" y1="120" x2="80" y2="80" class="conn-line"/>
+  <line x1="200" y1="120" x2="160" y2="70" class="conn-line"/>
+  <line x1="260" y1="120" x2="260" y2="70" class="conn-line"/>
+  <line x1="300" y1="120" x2="340" y2="80" class="conn-line"/>
+
+  <!-- Nối ĐƠN VỊ KH với thuộc tính -->
+  <line x1="880" y1="120" x2="820" y2="80" class="conn-line"/>
+  <line x1="940" y1="120" x2="940" y2="70" class="conn-line"/>
+  <line x1="1000" y1="120" x2="1050" y2="80" class="conn-line"/>
+
+  <!-- Quan hệ THUỘC (Đơn vị ĐH - Người đặt) -->
+  <line x1="230" y1="165" x2="230" y2="195" class="rel-line"/>
+  <line x1="230" y1="235" x2="230" y2="265" class="rel-line"/>
+
+  <!-- Quan hệ THUỘC (Đơn vị KH - Người nhận) -->
+  <line x1="940" y1="165" x2="940" y2="195" class="rel-line"/>
+  <line x1="940" y1="235" x2="940" y2="265" class="rel-line"/>
+
+  <!-- Thuộc tính NGƯỜI ĐẶT -->
+  <line x1="150" y1="280" x2="70" y2="265" class="conn-line"/>
+  <line x1="150" y1="300" x2="70" y2="315" class="conn-line"/>
+
+  <!-- Nối NGƯỜI ĐẶT -> Quan hệ ĐẶT -->
+  <line x1="230" y1="315" x2="230" y2="440" class="rel-line"/>
+  <!-- Nối Quan hệ ĐẶT -> HÀNG -->
+  <line x1="230" y1="520" x2="520" y2="600" class="rel-line"/>
+
+  <!-- Thuộc tính của quan hệ ĐẶT -->
+  <line x1="180" y1="465" x2="85" y2="430" class="conn-line"/>
+  <line x1="180" y1="480" x2="75" y2="480" class="conn-line"/>
+  <line x1="180" y1="495" x2="85" y2="530" class="conn-line"/>
+
+  <!-- Thuộc tính NGƯỜI NHẬN -->
+  <line x1="1020" y1="280" x2="1100" y2="265" class="conn-line"/>
+  <line x1="1020" y1="300" x2="1100" y2="315" class="conn-line"/>
+
+  <!-- Thuộc tính NGƯỜI GIAO -->
+  <line x1="1050" y1="435" x2="1120" y2="400" class="conn-line"/>
+  <line x1="1050" y1="465" x2="1120" y2="500" class="conn-line"/>
+
+  <!-- Thuộc tính NƠI GIAO -->
+  <line x1="1050" y1="710" x2="1120" y2="680" class="conn-line"/>
+  <line x1="1050" y1="740" x2="1120" y2="770" class="conn-line"/>
+
+  <!-- Thuộc tính HÀNG -->
+  <line x1="530" y1="650" x2="430" y2="730" class="conn-line"/>
+  <line x1="570" y1="650" x2="530" y2="760" class="conn-line"/>
+  <line x1="650" y1="650" x2="680" y2="760" class="conn-line"/>
+  <line x1="690" y1="650" x2="790" y2="730" class="conn-line"/>
+
+  <!-- Quan hệ GIAO -->
+  <line x1="940" y1="315" x2="780" y2="500" class="rel-line"/>
+  <line x1="930" y1="450" x2="830" y2="530" class="rel-line"/>
+  <line x1="930" y1="710" x2="800" y2="570" class="rel-line"/>
+  <line x1="690" y1="600" x2="740" y2="550" class="rel-line"/>
+
+  <!-- Thuộc tính của quan hệ GIAO -->
+  <line x1="770" y1="485" x2="710" y2="400" class="conn-line"/>
+  <line x1="790" y1="485" x2="810" y2="390" class="conn-line"/>
+  <line x1="730" y1="520" x2="610" y2="480" class="conn-line"/>
+  <line x1="720" y1="550" x2="610" y2="540" class="conn-line"/>
+
+  <!-- ==================== CÁC THỰC THỂ ==================== -->
+  <!-- 1. ĐƠN VỊ ĐH -->
+  <g filter="url(#cardShadowB)">
+    <rect x="150" y="115" width="160" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="230" y="146" class="entity-title">ĐƠN VỊ ĐH</text>
+  </g>
+
+  <!-- 2. ĐƠN VỊ KH -->
+  <g filter="url(#cardShadowB)">
+    <rect x="860" y="115" width="160" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="940" y="146" class="entity-title">ĐƠN VỊ KH</text>
+  </g>
+
+  <!-- 3. NGƯỜI ĐẶT -->
+  <g filter="url(#cardShadowB)">
+    <rect x="150" y="265" width="160" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="230" y="296" class="entity-title">NGƯỜI ĐẶT</text>
+  </g>
+
+  <!-- 4. NGƯỜI NHẬN -->
+  <g filter="url(#cardShadowB)">
+    <rect x="860" y="265" width="160" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="940" y="296" class="entity-title">NGƯỜI NHẬN</text>
+  </g>
+
+  <!-- 5. NGƯỜI GIAO -->
+  <g filter="url(#cardShadowB)">
+    <rect x="930" y="425" width="150" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="1005" y="456" class="entity-title">NGƯỜI GIAO</text>
+  </g>
+
+  <!-- 6. NƠI GIAO -->
+  <g filter="url(#cardShadowB)">
+    <rect x="930" y="700" width="150" height="50" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="1005" y="731" class="entity-title">NƠI GIAO</text>
+  </g>
+
+  <!-- 7. HÀNG -->
+  <g filter="url(#cardShadowB)">
+    <rect x="510" y="590" width="190" height="55" rx="6" fill="url(#entityGradB)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="605" y="624" class="entity-title">HÀNG</text>
+  </g>
+
+  <!-- ==================== CÁC MỐI QUAN HỆ ==================== -->
+  <!-- THUỘC (Đơn vị ĐH - Người đặt) -->
+  <polygon points="230,195 275,215 230,235 185,215" fill="url(#relGradB)" stroke="#d97706" stroke-width="1.8"/>
+  <text x="230" y="220" class="rel-title">THUỘC</text>
+  <text x="240" y="180" class="cardinality">1</text>
+  <text x="240" y="255" class="cardinality">n</text>
+
+  <!-- THUỘC (Đơn vị KH - Người nhận) -->
+  <polygon points="940,195 985,215 940,235 895,215" fill="url(#relGradB)" stroke="#d97706" stroke-width="1.8"/>
+  <text x="940" y="220" class="rel-title">THUỘC</text>
+  <text x="950" y="180" class="cardinality">1</text>
+  <text x="950" y="255" class="cardinality">n</text>
+
+  <!-- ĐẶT -->
+  <polygon points="230,435 295,480 230,525 165,480" fill="url(#relGradB)" stroke="#d97706" stroke-width="2"/>
+  <text x="230" y="485" class="rel-title">ĐẶT</text>
+  <text x="240" y="340" class="cardinality">1</text>
+  <text x="410" y="570" class="cardinality">n</text>
+
+  <!-- GIAO -->
+  <polygon points="770,485 845,535 770,585 695,535" fill="url(#relGradB)" stroke="#d97706" stroke-width="2"/>
+  <text x="770" y="540" class="rel-title">GIAO</text>
+  <text x="880" y="360" class="cardinality">1</text>
+  <text x="890" y="465" class="cardinality">1</text>
+  <text x="880" y="685" class="cardinality">1</text>
+  <text x="725" y="595" class="cardinality">n</text>
+
+  <!-- ==================== CÁC THUỘC TÍNH ==================== -->
+  <!-- Thuộc tính ĐƠN VỊ ĐH -->
+  <ellipse cx="65" cy="75" rx="46" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="65" y="79" class="pk-text">Mã ĐV</text>
+  <ellipse cx="160" cy="65" rx="42" ry="17" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="160" y="69" class="attr-text">Tên ĐV</text>
+  <ellipse cx="255" cy="65" rx="42" ry="17" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="255" y="69" class="attr-text">Địa chỉ</text>
+  <ellipse cx="355" cy="75" rx="45" ry="17" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="355" y="79" class="attr-text">Điện thoại</text>
+
+  <!-- Thuộc tính ĐƠN VỊ KH -->
+  <ellipse cx="810" cy="75" rx="46" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="810" y="79" class="pk-text">Mã ĐV</text>
+  <ellipse cx="940" cy="65" rx="44" ry="17" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="940" y="69" class="attr-text">Tên ĐV</text>
+  <ellipse cx="1060" cy="75" rx="44" ry="17" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="1060" y="79" class="attr-text">Địa chỉ</text>
+
+  <!-- Thuộc tính NGƯỜI ĐẶT -->
+  <ellipse cx="55" cy="255" rx="50" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="55" y="259" class="pk-text">Mã số NĐ</text>
+  <ellipse cx="55" cy="315" rx="50" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="55" y="319" class="attr-text">Họ tên NĐ</text>
+
+  <!-- Thuộc tính quan hệ ĐẶT -->
+  <ellipse cx="55" cy="425" rx="48" ry="18" fill="url(#pkGradB)" stroke="#d97706" stroke-width="1.5"/>
+  <text x="55" y="429" class="pk-text" style="fill:#b45309;">Số ĐH</text>
+  <ellipse cx="55" cy="480" rx="46" ry="18" fill="url(#attrGradB)" stroke="#d97706" stroke-width="1.2"/>
+  <text x="55" y="484" class="attr-text">Ngày đặt</text>
+  <ellipse cx="55" cy="535" rx="46" ry="18" fill="url(#attrGradB)" stroke="#d97706" stroke-width="1.2"/>
+  <text x="55" y="539" class="attr-text">Số lượng</text>
+
+  <!-- Thuộc tính NGƯỜI NHẬN -->
+  <ellipse cx="1120" cy="255" rx="50" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1120" y="259" class="pk-text">Mã số NN</text>
+  <ellipse cx="1120" cy="315" rx="50" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="1120" y="319" class="attr-text">Họ tên NN</text>
+
+  <!-- Thuộc tính NGƯỜI GIAO -->
+  <ellipse cx="1125" cy="400" rx="48" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1125" y="404" class="pk-text">Mã số NG</text>
+  <ellipse cx="1125" cy="495" rx="48" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="1125" y="499" class="attr-text">Họ tên NG</text>
+
+  <!-- Thuộc tính NƠI GIAO -->
+  <ellipse cx="1125" cy="675" rx="50" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1125" y="679" class="pk-text">Mã số ĐĐG</text>
+  <ellipse cx="1125" cy="765" rx="50" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="1125" y="769" class="attr-text">Tên nơi giao</text>
+
+  <!-- Thuộc tính HÀNG -->
+  <ellipse cx="400" cy="740" rx="46" ry="18" fill="url(#pkGradB)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="400" y="744" class="pk-text">Mã hàng</text>
+  <ellipse cx="505" cy="775" rx="46" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="505" y="779" class="attr-text">Tên hàng</text>
+  <ellipse cx="700" cy="775" rx="45" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="700" y="779" class="attr-text">Đv tính</text>
+  <ellipse cx="810" cy="740" rx="50" ry="18" fill="url(#attrGradB)" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="810" y="744" class="attr-text">Mô tả hàng</text>
+
+  <!-- Thuộc tính quan hệ GIAO -->
+  <ellipse cx="690" cy="385" rx="48" ry="18" fill="url(#pkGradB)" stroke="#d97706" stroke-width="1.5"/>
+  <text x="690" y="389" class="pk-text" style="fill:#b45309;">Số PG</text>
+  <ellipse cx="810" cy="380" rx="48" ry="18" fill="url(#attrGradB)" stroke="#d97706" stroke-width="1.2"/>
+  <text x="810" y="384" class="attr-text">Ngày giao</text>
+  <ellipse cx="590" cy="480" rx="46" ry="18" fill="url(#attrGradB)" stroke="#d97706" stroke-width="1.2"/>
+  <text x="590" y="484" class="attr-text">Số lượng</text>
+  <ellipse cx="590" cy="545" rx="46" ry="18" fill="url(#attrGradB)" stroke="#d97706" stroke-width="1.2"/>
+  <text x="590" y="549" class="attr-text">Đơn giá</text>
+
+  <!-- Footer chú thích -->
+  <g transform="translate(40, 820)">
+    <rect x="0" y="0" width="1120" height="60" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text x="30" y="35" font-size="12" fill="#475569">💡 <tspan font-weight="bold">Nhận xét bước 4:</tspan> Hai thực thể ĐƠN VỊ ĐH và ĐƠN VỊ KH có thuộc tính gần như tương đồng (cùng là đối tác bên ngoài giao dịch với cửa hàng). Trong Bước 5 sẽ gộp thành <tspan font-weight="bold" fill="#2563eb">ĐƠN VỊ KHÁCH</tspan>.</text>
+  </g>
+</svg>

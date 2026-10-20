@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Thực hành] Quản lý đơn đặt hàng - Sơ đồ ERD & CSDL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --primary-light: rgba(59, 130, 246, 0.15);
+      --accent: #f59e0b;
+      --success: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--card-border);
+      padding: 40px 24px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      background-color: var(--primary-light);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 800px;
+    }
+
+    /* Tabs Navigation */
+    .tabs-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary-hover);
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Content Area */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+      margin-top: 30px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card styles */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Step Items */
+    .step-box {
+      border-left: 3px solid var(--primary);
+      padding-left: 20px;
+      margin-bottom: 30px;
+    }
+
+    .step-number {
+      font-weight: 800;
+      color: #60a5fa;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .step-heading {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* Data Table */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: #94a3b8;
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      color: #e2e8f0;
+    }
+
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .tag-pk {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-fk {
+      background-color: rgba(167, 139, 250, 0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Diagram Toolbar */
+    .diagram-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background-color: #0f172a;
+      padding: 14px 20px;
+      border-radius: 10px 10px 0 0;
+      border: 1px solid var(--card-border);
+      border-bottom: none;
+    }
+
+    .diagram-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #cbd5e1;
+      border-color: var(--card-border);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+    }
+
+    .btn-success {
+      background-color: #059669;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #10b981;
+    }
+
+    .diagram-viewer {
+      background-color: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .diagram-viewer svg {
+      width: 100%;
+      height: auto;
+      max-height: 800px;
+      border-radius: 6px;
+    }
+
+    /* Highlight Banner */
+    .banner-tip {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .banner-tip-icon {
+      font-size: 24px;
+    }
+
+    /* Notification Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #059669;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast">✅ Đã tải ảnh sơ đồ thành công!</div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <span class="badge">BÀI THỰC HÀNH CƠ SỞ DỮ LIỆU</span>
+      <h1>Quản Lý Đơn Đặt Hàng - Thiết Kế Mô Hình ERD</h1>
+      <p class="subtitle">
+        Phân tích nghiệp vụ, mô hình hóa thực thể - mối quan hệ (ERD Chen Notation) và chuẩn hóa sang mô hình cơ sở dữ liệu quan hệ (Relational Schema).
+      </p>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('tab-step5')">
+          ⭐ Sơ đồ Chuẩn hóa (Bước 5)
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-step4')">
+          📊 Sơ đồ Ban đầu (Bước 4)
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-relational')">
+          🗄️ Mô hình Quan hệ (Bảng SQL)
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-analysis')">
+          📝 Chi tiết 5 Bước Phân Tích
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== TAB 1: SƠ ĐỒ CHUẨN HÓA BƯỚC 5 ==================== -->
+    <div id="tab-step5" class="tab-content active">
+      <div class="banner-tip">
+        <div class="banner-tip-icon">🎯</div>
+        <div>
+          <strong>Mô hình khuyến nghị nộp bài:</strong> Đây là mô hình ERD hoàn chỉnh sau khi chuẩn hóa gộp <em>Đơn vị ĐH</em> và <em>Đơn vị KH</em> thành <strong>ĐƠN VỊ KHÁCH</strong>. Bạn có thể nhấn <strong>"Tải ảnh PNG nộp bài"</strong> để lưu ảnh chất lượng cao!
+        </div>
+      </div>
+
+      <div class="diagram-toolbar">
+        <div>
+          <strong style="color: #60a5fa; font-size: 15px;">Sơ đồ ERD Chuẩn Hóa Rút Gọn (Chen Notation)</strong>
+        </div>
+        <div class="diagram-actions">
+          <button class="btn btn-outline" onclick="openDiagramInNewTab('erd_so_do_chuan_hoa.svg')">
+            🔍 Xem SVG đầy đủ
+          </button>
+          <button class="btn btn-success" onclick="downloadSVGAsPNG('svg-step5', 'erd_quan_ly_don_dat_hang_chuan_hoa.png')">
+            📥 Tải ảnh PNG nộp bài
+          </button>
+        </div>
+      </div>
+
+      <div class="diagram-viewer" id="viewer-step5">
+        <!-- SVG Nhúng trực tiếp -->
+        <object id="svg-step5" data="erd_so_do_chuan_hoa.svg" type="image/svg+xml" style="width: 100%; min-height: 750px;"></object>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: SƠ ĐỒ BAN ĐẦU BƯỚC 4 ==================== -->
+    <div id="tab-step4" class="tab-content">
+      <div class="card" style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="color: #cbd5e1; font-size: 16px; margin-bottom: 6px;">Mô hình ban đầu (Bước 4) - Tách biệt 7 thực thể:</h3>
+        <p style="color: var(--text-muted); font-size: 14px;">
+          Ở bước này, <strong>Đơn vị ĐH</strong> và <strong>Đơn vị KH</strong> được biểu diễn riêng biệt trước khi nhận ra sự trùng lặp và gộp lại ở Bước 5.
+        </p>
+      </div>
+
+      <div class="diagram-toolbar">
+        <div>
+          <strong style="color: #94a3b8; font-size: 15px;">Sơ đồ ERD Ban Đầu (7 thực thể)</strong>
+        </div>
+        <div class="diagram-actions">
+          <button class="btn btn-outline" onclick="openDiagramInNewTab('erd_so_do_ban_dau.svg')">
+            🔍 Xem SVG đầy đủ
+          </button>
+          <button class="btn btn-primary" onclick="downloadSVGAsPNG('svg-step4', 'erd_quan_ly_don_dat_hang_ban_dau.png')">
+            📥 Tải ảnh PNG
+          </button>
+        </div>
+      </div>
+
+      <div class="diagram-viewer">
+        <object id="svg-step4" data="erd_so_do_ban_dau.svg" type="image/svg+xml" style="width: 100%; min-height: 750px;"></object>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: MÔ HÌNH DỮ LIỆU QUAN HỆ ==================== -->
+    <div id="tab-relational" class="tab-content">
+      <div class="card" style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="color: #38bdf8; font-size: 16px; margin-bottom: 6px;">Chuyển đổi sang Mô hình Bảng Quan Hệ (Physical Relational Schema):</h3>
+        <p style="color: var(--text-muted); font-size: 14px;">
+          Các quan hệ Nhiều - Nhiều (N - N) như <em>ĐẶT HÀNG</em> và <em>GIAO HÀNG</em> được tách thành 2 bảng liên kết: <code>CHI_TIET_DAT_HANG</code> và <code>CHI_TIET_GIAO_HANG</code>. Thuộc tính <code>Thành tiền</code> là thuộc tính dẫn xuất tính bằng <code>SoLuong * DonGia</code>.
+        </p>
+      </div>
+
+      <div class="diagram-toolbar">
+        <div>
+          <strong style="color: #38bdf8; font-size: 15px;">Sơ đồ Mô hình Bảng CSDL (Crow's Foot / Relational Tables)</strong>
+        </div>
+        <div class="diagram-actions">
+          <button class="btn btn-outline" onclick="openDiagramInNewTab('erd_mo_hinh_quan_he.svg')">
+            🔍 Xem SVG đầy đủ
+          </button>
+          <button class="btn btn-primary" onclick="downloadSVGAsPNG('svg-rel', 'erd_mo_hinh_quan_he_tables.png')">
+            📥 Tải ảnh PNG
+          </button>
+        </div>
+      </div>
+
+      <div class="diagram-viewer" style="background-color: #0f172a;">
+        <object id="svg-rel" data="erd_mo_hinh_quan_he.svg" type="image/svg+xml" style="width: 100%; min-height: 750px;"></object>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: CHI TIẾT 5 BƯỚC PHÂN TÍCH ==================== -->
+    <div id="tab-analysis" class="tab-content">
+      <div class="card">
+        
+        <!-- BƯỚC 1 -->
+        <div class="step-box">
+          <div class="step-number">Bước 1</div>
+          <h2 class="step-heading">Liệt Kê Và Chọn Lọc Thông Tin</h2>
+          <p style="color: var(--text-muted); margin-bottom: 12px;">Từ phiếu Đơn đặt hàng và Phiếu giao hàng, ta liệt kê và phân nhóm thông tin:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+            <div style="background-color: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; padding: 16px;">
+              <h3 style="color: #60a5fa; font-size: 15px; margin-bottom: 10px;">📋 Đơn Đặt Hàng gồm:</h3>
+              <ul style="padding-left: 20px; font-size: 13.5px; color: #cbd5e1; line-height: 1.8;">
+                <li><strong>Số đơn hàng (Số ĐH):</strong> Mã định danh đơn hàng</li>
+                <li><strong>Tên đơn vị đặt hàng (Tên ĐV):</strong> Tên công ty / tổ chức đặt</li>
+                <li><strong>Địa chỉ &amp; Điện thoại:</strong> Liên hệ của đơn vị đặt</li>
+                <li><strong>Ngày đặt:</strong> Thời điểm lập đơn hàng</li>
+                <li><strong>Tên hàng, Mô tả, Đv tính:</strong> Thông tin hàng hóa</li>
+                <li><strong>Số lượng:</strong> Số lượng đặt của từng mặt hàng</li>
+                <li><strong>Người đặt hàng (Họ tên NĐ):</strong> Nhân viên đại diện đặt</li>
+              </ul>
+            </div>
+
+            <div style="background-color: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; padding: 16px;">
+              <h3 style="color: #34d399; font-size: 15px; margin-bottom: 10px;">🚚 Phiếu Giao Hàng gồm:</h3>
+              <ul style="padding-left: 20px; font-size: 13.5px; color: #cbd5e1; line-height: 1.8;">
+                <li><strong>Số phiếu giao hàng (Số PG):</strong> Mã định danh phiếu giao</li>
+                <li><strong>Tên ĐV &amp; Địa chỉ:</strong> Đơn vị nhận hàng</li>
+                <li><strong>Nơi giao hàng (Tên nơi GH):</strong> Kho / địa điểm bàn giao</li>
+                <li><strong>Ngày giao:</strong> Thời điểm bàn giao hàng hóa</li>
+                <li><strong>Tên hàng, Đv tính:</strong> Hàng hóa được giao</li>
+                <li><strong>Số lượng, Đơn giá:</strong> Số lượng giao và giá bán</li>
+                <li><strong>Thành tiền:</strong> <em>Thuộc tính suy diễn (= Số lượng × Đơn giá), loại bỏ khỏi lưu trữ thô để tránh dư thừa</em></li>
+                <li><strong>Họ tên NN:</strong> Người nhận hàng</li>
+                <li><strong>Họ tên NG:</strong> Người giao hàng (nhân viên giao nhận)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- BƯỚC 2 -->
+        <div class="step-box">
+          <div class="step-number">Bước 2</div>
+          <h2 class="step-heading">Xác Định Thực Thể Và Thuộc Tính</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tên Thực Thể</th>
+                  <th>Khóa Chính (PK)</th>
+                  <th>Các Thuộc Tính Mô Tả</th>
+                  <th>Ý Nghĩa Nghiệp Vụ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ĐƠN VỊ ĐH</strong></td>
+                  <td><span class="tag-pk">Mã ĐV</span></td>
+                  <td>Tên ĐV, Địa chỉ, Điện thoại</td>
+                  <td>Tổ chức, khách hàng đặt mua</td>
+                </tr>
+                <tr>
+                  <td><strong>ĐƠN VỊ KH</strong></td>
+                  <td><span class="tag-pk">Mã ĐV</span></td>
+                  <td>Tên ĐV, Địa chỉ</td>
+                  <td>Tổ chức, khách hàng nhận hàng</td>
+                </tr>
+                <tr>
+                  <td><strong>HÀNG</strong></td>
+                  <td><span class="tag-pk">Mã hàng</span></td>
+                  <td>Tên hàng, Đv tính, Mô tả hàng</td>
+                  <td>Danh mục hàng hóa/sản phẩm</td>
+                </tr>
+                <tr>
+                  <td><strong>NGƯỜI ĐẶT</strong></td>
+                  <td><span class="tag-pk">Mã số NĐ</span></td>
+                  <td>Họ tên NĐ</td>
+                  <td>Cá nhân đại diện đặt hàng</td>
+                </tr>
+                <tr>
+                  <td><strong>NƠI GIAO</strong></td>
+                  <td><span class="tag-pk">Mã số ĐĐG</span></td>
+                  <td>Tên nơi giao</td>
+                  <td>Địa điểm, kho giao nhận</td>
+                </tr>
+                <tr>
+                  <td><strong>NGƯỜI NHẬN</strong></td>
+                  <td><span class="tag-pk">Mã số NN</span></td>
+                  <td>Họ tên NN</td>
+                  <td>Cá nhân đại diện ký nhận</td>
+                </tr>
+                <tr>
+                  <td><strong>NGƯỜI GIAO</strong></td>
+                  <td><span class="tag-pk">Mã số NG</span></td>
+                  <td>Họ tên NG</td>
+                  <td>Nhân viên vận chuyển, giao nhận</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BƯỚC 3 -->
+        <div class="step-box">
+          <div class="step-number">Bước 3</div>
+          <h2 class="step-heading">Xác Định Các Mối Quan Hệ (Bản Số Lực Lượng)</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mối Quan Hệ</th>
+                  <th>Các Thực Thể Tham Gia</th>
+                  <th>Tỷ Lệ (Bản Số)</th>
+                  <th>Thuộc Tính Của Mối Quan Hệ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: #fbbf24;">THUỘC</strong></td>
+                  <td>NGƯỜI ĐẶT – ĐƠN VỊ ĐH</td>
+                  <td>n : 1</td>
+                  <td>Mỗi người đặt thuộc về 1 đơn vị đặt hàng</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fbbf24;">THUỘC</strong></td>
+                  <td>NGƯỜI NHẬN – ĐƠN VỊ KH</td>
+                  <td>n : 1</td>
+                  <td>Mỗi người nhận thuộc về 1 đơn vị khách hàng</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fbbf24;">ĐẶT</strong> (Đơn Đặt Hàng)</td>
+                  <td>NGƯỜI ĐẶT – HÀNG</td>
+                  <td>1 : n (hoặc n : m)</td>
+                  <td><strong>Số ĐH, Ngày đặt, Số lượng</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fbbf24;">GIAO</strong> (Phiếu Giao Hàng)</td>
+                  <td>NGƯỜI GIAO – NGƯỜI NHẬN – NƠI GIAO – HÀNG</td>
+                  <td>Liên kết bậc 4</td>
+                  <td><strong>Số PG, Ngày giao, Số lượng, Đơn giá</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BƯỚC 4 -->
+        <div class="step-box">
+          <div class="step-number">Bước 4</div>
+          <h2 class="step-heading">Vẽ Biểu Đồ Mô Hình Thực Thể ERD Ban Đầu</h2>
+          <p style="color: #cbd5e1; font-size: 14px;">
+            Kết nối các thực thể và thuộc tính đã xác định ở Bước 2 &amp; 3. Mô hình này duy trì 7 thực thể với 2 thực thể đơn vị riêng biệt.
+            <button class="btn btn-outline" style="margin-left: 10px; padding: 4px 10px;" onclick="switchTab('tab-step4')">
+              👉 Xem sơ đồ Bước 4
+            </button>
+          </p>
+        </div>
+
+        <!-- BƯỚC 5 -->
+        <div class="step-box" style="margin-bottom: 0;">
+          <div class="step-number">Bước 5</div>
+          <h2 class="step-heading">Chuẩn Hóa Và Rút Gọn Mô Hình Thực Thể ERD</h2>
+          <div style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 18px; line-height: 1.8; font-size: 14px;">
+            <p><strong>💡 Phân tích chuẩn hóa:</strong></p>
+            <p>
+              Do <strong>Đơn vị đặt hàng</strong> và <strong>Đơn vị khách hàng</strong> thực chất đều là các đối tác bên ngoài thực hiện giao dịch với cửa hàng/doanh nghiệp và cùng có thông tin nhận diện (tên, địa chỉ, số điện thoại), ta tiến hành:
+            </p>
+            <ul style="padding-left: 20px; margin: 10px 0;">
+              <li>Gộp thành 1 thực thể duy nhất: <strong style="color: #60a5fa;">ĐƠN VỊ KHÁCH</strong> (gồm: <code>Mã ĐV [PK]</code>, <code>Tên ĐV</code>, <code>Địa chỉ</code>, <code>Điện thoại</code>).</li>
+              <li>Cả <strong>Người đặt</strong> và <strong>Người nhận</strong> đều có mối quan hệ <code>THUỘC (n : 1)</code> về <strong>Đơn vị khách</strong>.</li>
+            </ul>
+            <p style="margin-top: 10px;">
+              <button class="btn btn-primary" onclick="switchTab('tab-step5')">
+                👉 Xem sơ đồ ERD chuẩn hóa hoàn chỉnh (Bước 5)
+              </button>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const targetContent = document.getElementById(tabId);
+      if (targetContent) targetContent.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Open SVG directly in browser
+    function openDiagramInNewTab(svgFile) {
+      window.open(svgFile, '_blank');
+    }
+
+    // Convert SVG to PNG and trigger download
+    function downloadSVGAsPNG(svgObjectId, filename) {
+      const objElem = document.getElementById(svgObjectId);
+      if (!objElem) return;
+
+      const svgDoc = objElem.contentDocument || objElem.getSVGDocument();
+      if (!svgDoc) {
+        // Fallback: download the SVG directly
+        const link = document.createElement('a');
+        link.href = objElem.getAttribute('data');
+        link.download = filename.replace('.png', '.svg');
+        link.click();
+        showToast('Đang tải file SVG...');
+        return;
+      }
+
+      const svgElement = svgDoc.querySelector('svg');
+      if (!svgElement) return;
+
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svgElement);
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(svgBlob);
+
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = svgElement.viewBox.baseVal.width || 1200;
+        canvas.height = svgElement.viewBox.baseVal.height || 900;
+        const context = canvas.getContext('2d');
+
+        // Draw white background
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0);
+
+        const pngURL = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngURL;
+        downloadLink.download = filename;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(blobURL);
+
+        showToast('✅ Tải ảnh PNG nộp bài thành công!');
+      };
+      image.src = blobURL;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
