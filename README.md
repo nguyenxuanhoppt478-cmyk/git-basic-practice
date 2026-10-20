@@ -177,3 +177,15 @@ ALTER TABLE MonHoc
     ADD CONSTRAINT FK_MaGV FOREIGN KEY (MaGV) REFERENCES GiaoVien(MaGV);
 ```
 
+---
+
+# [Thực Hành] Khủng Hoảng Tại Phòng Khám HealthSync
+
+Khắc phục lỗi vênh dữ liệu giữa Lưu đồ hoạt động (UML Activity Diagram) và Cơ sở dữ liệu MySQL, đảm bảo tính toàn vẹn nghiệp vụ khám chữa bệnh, tiền cọc, hủy phạt và kê đơn thuốc.
+
+## 📁 Các File Thành Phần:
+- 👉 [healthsync_db.sql](healthsync_db.sql): Toàn bộ mã nguồn DDL (CREATE TABLE, TRIGGER) và DML kịch bản vận hành thực tế.
+- 👉 [consistency_report.md](consistency_report.md): Báo cáo chẩn đoán 3 điểm vênh nghiêm trọng & chuẩn bị câu trả lời vấn đáp bảo vệ thiết kế (100% tự tin).
+- 👉 [ai_prompt_log.md](ai_prompt_log.md): Nhật ký tương tác AI chuyên sâu (phân tích kiểu số thực tài chính `DECIMAL`, cờ `ENUM`, ràng buộc `ON DELETE` và Trigger).
+
+
