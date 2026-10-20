@@ -118,3 +118,62 @@ Chỉ cần nhấp đúp chuột vào file:
 DAY_BAI_LEN_GITHUB.bat
 ```
 Hệ thống sẽ tự động đồng bộ toàn bộ file bài làm lên GitHub của bạn!
+
+---
+
+# [Thực Hành] Tạo Bảng Trong CSDL - QuanLyDiemThi
+
+Cơ sở dữ liệu quản lý điểm thi gồm 4 bảng: `HocSinh`, `MonHoc`, `BangDiem`, `GiaoVien` với đầy đủ các ràng buộc khóa chính (`PRIMARY KEY`) và khóa ngoại (`FOREIGN KEY`).
+
+## 📁 File SQL Mã Nguồn
+👉 [quan_ly_diem_thi.sql](quan_ly_diem_thi.sql)
+
+## 📌 Các bước thực hiện bằng câu lệnh SQL:
+
+```sql
+-- Bước 1: Tạo cơ sở dữ liệu QuanLyDiemThi
+DROP DATABASE IF EXISTS QuanLyDiemThi;
+CREATE DATABASE QuanLyDiemThi;
+
+-- Bước 2: Chọn Database QuanLyDiemThi
+USE QuanLyDiemThi;
+
+-- Bước 3: Tạo bảng HocSinh
+CREATE TABLE HocSinh (
+    MaHS VARCHAR(20) PRIMARY KEY,
+    TenHS VARCHAR(50) NOT NULL,
+    NgaySinh DATETIME,
+    Lop VARCHAR(20),
+    GT VARCHAR(20)
+);
+
+-- Bước 4: Tạo bảng MonHoc
+CREATE TABLE MonHoc (
+    MaMH VARCHAR(50) PRIMARY KEY,
+    TenMH VARCHAR(50) NOT NULL,
+    MaGV VARCHAR(20)
+);
+
+-- Bước 5: Tạo bảng BangDiem (Bảng trung gian quan hệ n - n giữa HocSinh và MonHoc)
+CREATE TABLE BangDiem (
+    MaHS VARCHAR(20),
+    MaMH VARCHAR(50),
+    DiemThi INT,
+    NgayKT DATETIME,
+    PRIMARY KEY (MaHS, MaMH),
+    CONSTRAINT FK_BangDiem_HocSinh FOREIGN KEY (MaHS) REFERENCES HocSinh(MaHS),
+    CONSTRAINT FK_BangDiem_MonHoc FOREIGN KEY (MaMH) REFERENCES MonHoc(MaMH)
+);
+
+-- Bước 6: Tạo bảng GiaoVien
+CREATE TABLE GiaoVien (
+    MaGV VARCHAR(20) PRIMARY KEY,
+    TenGV VARCHAR(50) NOT NULL,
+    SDT VARCHAR(10)
+);
+
+-- Bước 7: Bổ sung khóa ngoại cho bảng MonHoc tham chiếu đến bảng GiaoVien
+ALTER TABLE MonHoc 
+    ADD CONSTRAINT FK_MaGV FOREIGN KEY (MaGV) REFERENCES GiaoVien(MaGV);
+```
+
